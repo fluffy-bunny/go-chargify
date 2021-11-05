@@ -81,7 +81,14 @@ We use the following additional tools in this library, and thank the maintainers
 * [Update Subscription](https://reference.chargify.com/v1/subscriptions-product-changes-migrations-upgrades-downgrades)
 * [Cancel Subscription - Immediately](https://reference.chargify.com/v1/subscriptions-cancellations/cancel-subscription)
 * [Cancel Subscription - Delayed](https://reference.chargify.com/v1/subscriptions-cancellations/cancel-subscription-delayed-method-1)
-* [Remove Delayed Cancellation](https://reference.chargify.com/v1/subscriptions-cancellations/cancel-subscription-remove-delayed-method)
+* [Remove Delayed Cancellation](https://reference.chargify.com/v1/subscriptions-cancellations/cancel-subscription-remove-delayed-method)  
+
+### Prepaid Usage
+* [Update Prepaid Usage Allocation Expiration Date](https://reference.chargify.com/v1/subscriptions-components/update-prepaid-usage-allocation-expiration-date) **TODO**
+* [Delete Prepaid Usage Allocation](https://reference.chargify.com/v1/subscriptions-components/delete-prepaid-usage-allocation) **TODO**  
+* [Create Usage for Subscription](https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription)
+* [List Usages for Subscription](https://reference.chargify.com/v1/subscriptions-components/list-usages-for-subscription) **TODO**  
+* [Create Usage When Creating a New Subscription](https://reference.chargify.com/v1/subscriptions-components/setting-quantity-at-subscription-creation-2) **TODO**  
 
 ### Coupons
 
