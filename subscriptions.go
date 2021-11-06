@@ -224,13 +224,14 @@ func RefundSubscriptionPayment(subscriptionID string, paymentID string, amount s
 	return refund, err
 }
 
-// GetCustomerByID gets a customer by chargify id
+// ListSubscriptionEvents returns a list of events for a subscription
+// https://reference.chargify.com/v1/events/list-events-for-subscription
 func ListSubscriptionEvents(subscriptionID int, queryParams *ListSubscriptionEventsQueryParams) (found []Event, err error) {
 	structs.DefaultTagName = "mapstructure"
 	m := structs.Map(queryParams)
 	body := internal.ToMapStringToString(m)
 	ret, err := makeCall(endpoints[endpointSubscriptionEvents], body, &map[string]string{
-		"subscriptionID": fmt.Sprintf("%d", subscriptionID),
+		"subscription_id": fmt.Sprintf("%d", subscriptionID),
 	})
 	if err != nil || ret.HTTPCode != http.StatusOK {
 		return nil, err
@@ -249,35 +250,39 @@ func ListSubscriptionEvents(subscriptionID int, queryParams *ListSubscriptionEve
 	return found, nil
 }
 
+// ListSubscriptionComponents lists the components for a subscription
+// https://reference.chargify.com/v1/subscriptions-components/list-components-for-a-subscription
+func ListSubscriptionComponents(subscriptionID int) (components []Component, err error) {
+	structs.DefaultTagName = "mapstructure"
+	ret, err := makeCall(endpoints[endpointSubscriptionComponentsGet], nil, &map[string]string{
+		"subscription_id": fmt.Sprintf("%d", subscriptionID),
+	})
+	if err != nil || ret.HTTPCode != http.StatusOK {
+		return nil, err
+	}
+
+	temp := ret.Body.([]interface{})
+	for i := range temp {
+		entry := temp[i].(map[string]interface{})
+		raw := entry["component"]
+		entity := Component{}
+		err = mapstructure.Decode(raw, &entity)
+		if err == nil {
+			components = append(components, entity)
+		}
+	}
+	return components, nil
+}
+
 // CreateUsageForSubscriptions creates usage for a subscription
 // https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription
-// example response
-/*   200:
-{
-  "usage": {
-    "id": 138522957,
-    "memo": "My memo",
-    "created_at": "2017-11-13T10:05:32-06:00",
-    "price_point_id": 149416,
-    "quantity": 1000
-  }
-}
-
-Errors (422)
-
-{
-  "errors": [
-    "Price point: could not be found."
-  ]
-}
-*/
 func CreateUsageForSubscriptions(subscriptionID int, componentID int, queryParams *CreateUsageForSubscriptionsRequest) (*CreateUsageForSubscriptionsResponse, error) {
 	structs.DefaultTagName = "mapstructure"
 	m := structs.Map(queryParams)
 	body := internal.ToMapStringToString(m)
 	ret, err := makeCall(endpoints[endpointSubscriptionComponentsUsages], body, &map[string]string{
-		"subscriptionID": fmt.Sprintf("%d", subscriptionID),
-		"componentID":    fmt.Sprintf("%d", componentID),
+		"subscription_id": fmt.Sprintf("%d", subscriptionID),
+		"component_id":    fmt.Sprintf("%d", componentID),
 	})
 	if err != nil || ret.HTTPCode != http.StatusOK {
 		return nil, err

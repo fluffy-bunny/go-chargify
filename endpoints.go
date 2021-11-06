@@ -62,6 +62,7 @@ const (
 	endpointSubscriptionRefund           = "subscription_refund"
 	endpointSubscriptionEvents           = "subscription_events"
 	endpointSubscriptionComponentsUsages = "subscription_components_usages"
+	endpointSubscriptionComponentsGet    = "subscription_components_get"
 
 	endpointGetInvoices   = "invoices_get"
 	endpointGetInvoice    = "invoice_get"
@@ -338,18 +339,28 @@ var endpoints = map[string]endpoint{
 		},
 	},
 	endpointSubscriptionEvents: {
+		// https://reference.chargify.com/v1/events/list-events-for-subscription
 		method: http.MethodGet,
-		uri:    "subscriptions/{subscriptionID}/events.json",
+		uri:    "subscriptions/{subscription_id}/events.json",
 		pathParams: []string{
-			"{subscriptionID}",
+			"{subscription_id}",
 		},
 	},
 	endpointSubscriptionComponentsUsages: {
+		// https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription
 		method: http.MethodPost,
-		uri:    "subscriptions/{subscriptionID}/components/{componentID}/usages.json",
+		uri:    "subscriptions/{subscription_id}/components/{component_id}/usages.json",
 		pathParams: []string{
-			"{subscriptionID}",
-			"{componentID}",
+			"{subscription_id}",
+			"{component_id}",
+		},
+	},
+	endpointSubscriptionComponentsGet: {
+		// https://reference.chargify.com/v1/subscriptions-components/list-components-for-a-subscription
+		method: http.MethodGet,
+		uri:    "subscriptions/{subscription_id}/components.json",
+		pathParams: []string{
+			"{subscription_id}",
 		},
 	},
 
