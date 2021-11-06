@@ -34,11 +34,11 @@ type Subscription struct {
 	Product                       *Product  `json:"product,omitempty" mapstructure:"product"`
 }
 
-// CreateUsageForSubscriptionsQueryParams represents the query params for CreateUsageForSubscriptions
-type CreateUsageForSubscriptionsQueryParams struct {
+// CreateUsageForSubscriptionsRequest represents the query params for CreateUsageForSubscriptions
+type CreateUsageForSubscriptionsRequest struct {
 	Quantity     int     `json:"quantity,omitempty" mapstructure:"quantity,omitempty"`
 	Memo         *string `json:"memo,omitempty" mapstructure:"memo,omitempty"`
-	PricePointID string  `json:"price_point_id,omitempty" mapstructure:"price_point_id,omitempty"`
+	PricePointID *string `json:"price_point_id,omitempty" mapstructure:"price_point_id,omitempty"`
 }
 
 // CreateUsageForSubscriptionsResponse represents the response from CreateUsageForSubscriptions
@@ -271,7 +271,7 @@ Errors (422)
   ]
 }
 */
-func CreateUsageForSubscriptions(subscriptionID int, componentID int, queryParams *CreateUsageForSubscriptionsQueryParams) (*CreateUsageForSubscriptionsResponse, error) {
+func CreateUsageForSubscriptions(subscriptionID int, componentID int, queryParams *CreateUsageForSubscriptionsRequest) (*CreateUsageForSubscriptionsResponse, error) {
 	structs.DefaultTagName = "mapstructure"
 	m := structs.Map(queryParams)
 	body := internal.ToMapStringToString(m)
