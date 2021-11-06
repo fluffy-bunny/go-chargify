@@ -43,6 +43,8 @@ We use the following additional tools in this library, and thank the maintainers
 * [Delete Customer](https://reference.chargify.com/v1/customers/delete-the-customer)
 * [Get Customers](https://reference.chargify.com/v1/customers/list-customers-for-a-site)
 * [Search for Customers](https://reference.chargify.com/v1/customers/search-for-customer)
+* [Read Customer by Reference Value](https://reference.chargify.com/v1/customers/read-customer-by-reference-value)
+* [List Customer Subscriptions](https://reference.chargify.com/v1/customers/list-customer-subscriptions)
 
 ### Events
 
@@ -82,8 +84,7 @@ We use the following additional tools in this library, and thank the maintainers
 * [Cancel Subscription - Immediately](https://reference.chargify.com/v1/subscriptions-cancellations/cancel-subscription)
 * [Cancel Subscription - Delayed](https://reference.chargify.com/v1/subscriptions-cancellations/cancel-subscription-delayed-method-1)
 * [Remove Delayed Cancellation](https://reference.chargify.com/v1/subscriptions-cancellations/cancel-subscription-remove-delayed-method)  
-
-### Prepaid Usage
+* [List Components for a Subscription](https://reference.chargify.com/v1/subscriptions-components/list-components-for-a-subscription)  
 * [Update Prepaid Usage Allocation Expiration Date](https://reference.chargify.com/v1/subscriptions-components/update-prepaid-usage-allocation-expiration-date) **TODO**
 * [Delete Prepaid Usage Allocation](https://reference.chargify.com/v1/subscriptions-components/delete-prepaid-usage-allocation) **TODO**  
 * [Create Usage for Subscription](https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription)
