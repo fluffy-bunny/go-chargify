@@ -59,10 +59,10 @@ const (
 	endpointSubscriptionMigrate   = "subscription_migrate"
 	endpointSubscriptionUpdateNow = "subscription_update_now"
 
-	endpointSubscriptionRefund           = "subscription_refund"
-	endpointSubscriptionEvents           = "subscription_events"
-	endpointSubscriptionComponentsUsages = "subscription_components_usages"
-	endpointSubscriptionComponentsGet    = "subscription_components_get"
+	endpointSubscriptionRefund              = "subscription_refund"
+	endpointSubscriptionEvents              = "subscription_events"
+	endpointSubscriptionComponentsUsagePost = "subscription_components_usage_post"
+	endpointSubscriptionComponentsGet       = "subscription_components_get"
 
 	endpointGetInvoices   = "invoices_get"
 	endpointGetInvoice    = "invoice_get"
@@ -346,7 +346,7 @@ var endpoints = map[string]endpoint{
 			"{subscription_id}",
 		},
 	},
-	endpointSubscriptionComponentsUsages: {
+	endpointSubscriptionComponentsUsagePost: {
 		// https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription
 		method: http.MethodPost,
 		uri:    "subscriptions/{subscription_id}/components/{component_id}/usages.json",

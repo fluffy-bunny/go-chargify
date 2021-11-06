@@ -36,18 +36,22 @@ type Subscription struct {
 
 // CreateUsageForSubscriptionsRequest represents the query params for CreateUsageForSubscriptions
 type CreateUsageForSubscriptionsRequest struct {
-	Quantity     int     `json:"quantity,omitempty" mapstructure:"quantity,omitempty"`
+	Quantity     *int    `json:"quantity,omitempty" mapstructure:"quantity,omitempty"`
 	Memo         *string `json:"memo,omitempty" mapstructure:"memo,omitempty"`
 	PricePointID *string `json:"price_point_id,omitempty" mapstructure:"price_point_id,omitempty"`
 }
 
 // CreateUsageForSubscriptionsResponse represents the response from CreateUsageForSubscriptions
 type CreateUsageForSubscriptionsResponse struct {
-	ID           int    `json:"id" mapstructure:"id"`
-	Memo         string `json:"memo" mapstructure:"memo"`
-	CreatedAt    string `json:"created_at" mapstructure:"created_at"`
-	PricePointID string `json:"price_point_id,omitempty" mapstructure:"price_point_id,omitempty"`
-	Quantity     int    `json:"quantity" mapstructure:"quantity"`
+	ID              int    `json:"id" mapstructure:"id"`
+	Memo            string `json:"memo" mapstructure:"memo"`
+	CreatedAt       string `json:"created_at" mapstructure:"created_at"`
+	PricePointID    int    `json:"price_point_id,omitempty" mapstructure:"price_point_id,omitempty"`
+	Quantity        string `json:"quantity" mapstructure:"quantity"`
+	ComponentID     int    `json:"component_id" mapstructure:"component_id"`
+	ComponentHandle string `json:"component_handle" mapstructure:"component_handle"`
+	SubscriptionID  int    `json:"subscription_id" mapstructure:"subscription_id"`
+	OverageQuantity string `json:"overage_quantity" mapstructure:"overage_quantity"`
 }
 
 // ListSubscriptionEventsQueryParams represents the query params for ListSubscriptionEvents
@@ -276,11 +280,15 @@ func ListSubscriptionComponents(subscriptionID int) (components []Component, err
 
 // CreateUsageForSubscriptions creates usage for a subscription
 // https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription
-func CreateUsageForSubscriptions(subscriptionID int, componentID int, queryParams *CreateUsageForSubscriptionsRequest) (*CreateUsageForSubscriptionsResponse, error) {
+func CreateUsageForSubscriptions(subscriptionID int, componentID int, request *CreateUsageForSubscriptionsRequest) (*CreateUsageForSubscriptionsResponse, error) {
 	structs.DefaultTagName = "mapstructure"
-	m := structs.Map(queryParams)
+
+	m := structs.Map(request)
 	body := internal.ToMapStringToString(m)
-	ret, err := makeCall(endpoints[endpointSubscriptionComponentsUsages], body, &map[string]string{
+	payload := map[string]map[string]string{
+		"usage": body,
+	}
+	ret, err := makeCall(endpoints[endpointSubscriptionComponentsUsagePost], payload, &map[string]string{
 		"subscription_id": fmt.Sprintf("%d", subscriptionID),
 		"component_id":    fmt.Sprintf("%d", componentID),
 	})
