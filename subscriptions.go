@@ -236,7 +236,7 @@ func RefundSubscriptionPayment(subscriptionID string, paymentID string, amount s
 
 // ListSubscriptionEvents returns a list of events for a subscription
 // https://reference.chargify.com/v1/events/list-events-for-subscription
-func ListSubscriptionEvents(subscriptionID int, queryParams *ListSubscriptionEventsQueryParams) (found []Event, err error) {
+func ListSubscriptionEvents(subscriptionID int64, queryParams *ListSubscriptionEventsQueryParams) (found []Event, err error) {
 	structs.DefaultTagName = "mapstructure"
 	m := structs.Map(queryParams)
 	body := internal.ToMapStringToString(m)
@@ -262,7 +262,7 @@ func ListSubscriptionEvents(subscriptionID int, queryParams *ListSubscriptionEve
 
 // ListSubscriptionComponents lists the components for a subscription
 // https://reference.chargify.com/v1/subscriptions-components/list-components-for-a-subscription
-func ListSubscriptionComponents(subscriptionID int) (components []Component, err error) {
+func ListSubscriptionComponents(subscriptionID int64) (components []Component, err error) {
 	structs.DefaultTagName = "mapstructure"
 	ret, err := makeCall(endpoints[endpointSubscriptionComponentsGet], nil, &map[string]string{
 		"subscription_id": fmt.Sprintf("%d", subscriptionID),
@@ -286,7 +286,7 @@ func ListSubscriptionComponents(subscriptionID int) (components []Component, err
 
 // CreateUsageForSubscriptions creates usage for a subscription
 // https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription
-func CreateUsageForSubscriptions(subscriptionID int, componentID int, request *CreateUsageForSubscriptionsRequest) (*CreateUsageForSubscriptionsResponse, error) {
+func CreateUsageForSubscriptions(subscriptionID int64, componentID int64, request *CreateUsageForSubscriptionsRequest) (*CreateUsageForSubscriptionsResponse, error) {
 	structs.DefaultTagName = "mapstructure"
 
 	m := structs.Map(request)

@@ -48,6 +48,8 @@ type Component struct {
 	CreatedAt                 string  `json:"created_at" mapstructure:"created_at"`
 	UpdatedAt                 string  `json:"updated_at" mapstructure:"updated_at"`
 	AllowFractionalQuantities bool    `json:"allow_fractional_quantities" mapstructure:"allow_fractional_quantities"`
+	ComponentID               int64   `json:"component_id" mapstructure:"component_id"`
+	ComponentHandle           string  `json:"component_handle" mapstructure:"component_handle"`
 }
 
 type Price struct {

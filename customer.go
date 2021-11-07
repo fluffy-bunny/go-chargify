@@ -84,7 +84,7 @@ func UpdateCustomer(input *Customer) error {
 }
 
 // GetCustomerByID gets a customer by chargify id
-func GetCustomerByID(id int) (*Customer, error) {
+func GetCustomerByID(id int64) (*Customer, error) {
 	ret, err := makeCall(endpoints[endpointCustomerGet], nil, &map[string]string{
 		"id": fmt.Sprintf("%d", id),
 	})
@@ -163,7 +163,7 @@ func GetCustomers(page int, sortDir string) (found []Customer, err error) {
 }
 
 // GetCustomerSubscriptions
-func GetCustomerSubscriptions(customerID int) (found []Subscription, err error) {
+func GetCustomerSubscriptions(customerID int64) (found []Subscription, err error) {
 	ret, err := makeCall(endpoints[endpointCustomerSubscriptionsList], nil, &map[string]string{
 		"customer_id": fmt.Sprintf("%d", customerID),
 	})
