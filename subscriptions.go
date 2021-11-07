@@ -42,6 +42,12 @@ type CreateUsageForSubscriptionsRequest struct {
 }
 
 // CreateUsageForSubscriptionsResponse represents the response from CreateUsageForSubscriptions
+//https://reference.chargify.com/v1/subscriptions-components/create-usage-for-subscription
+/*
+11/07/2021: chargify documentation is wrong.
+OverageQuantity should be an int but comes back as a string
+Quantity should be an int but comes back as a string
+*/
 type CreateUsageForSubscriptionsResponse struct {
 	ID              int    `json:"id" mapstructure:"id"`
 	Memo            string `json:"memo" mapstructure:"memo"`
