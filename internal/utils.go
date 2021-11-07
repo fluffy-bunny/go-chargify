@@ -2,10 +2,12 @@ package internal
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 	"path"
 	"strconv"
+	"strings"
 )
 
 //PrettyJSON from object
@@ -70,13 +72,23 @@ func ToMapStringToString(m map[string]interface{}) map[string]string {
 	}
 	return found
 }
-func JoinUrls(basePath string, paths ...string) (*url.URL, error) {
-	u, err := url.Parse(basePath)
-	if err != nil {
-		return nil, fmt.Errorf("invalid url")
+func ResolveEndpointUrl(basePath string, path string) (*url.URL, error) {
+	parts := strings.Split(path, "?")
+	if len(parts) > 2 {
+		// only allow one ? in the path
+		return nil, errors.New("invalid path")
 	}
-	p2 := append([]string{u.Path}, paths...)
-	result := path.Join(p2...)
-	u.Path = result
-	return u, nil
+	pathSegment := joinURL(basePath, parts[0])
+	if len(parts) == 2 {
+		pathSegment = fmt.Sprintf("%s?%s", pathSegment, parts[1])
+	}
+	t, _ := url.Parse(pathSegment)
+	t = t.ResolveReference(t)
+	return t, nil
+}
+
+//joinURL joins a base with url paths
+func joinURL(base string, paths ...string) string {
+	p := path.Join(paths...)
+	return fmt.Sprintf("%s/%s", strings.TrimRight(base, "/"), strings.TrimLeft(p, "/"))
 }

@@ -68,7 +68,8 @@ func makeCallEx(options *makeCallOptions) (ret APIReturn, err error) {
 			endpointURI = strings.Replace(endpointURI, "{"+k+"}", v, -1)
 		}
 	}
-	urlUrl, err := internal.JoinUrls(root, endpointURI)
+
+	urlUrl, err := internal.ResolveEndpointUrl(root, endpointURI)
 	if err != nil {
 		return
 	}
